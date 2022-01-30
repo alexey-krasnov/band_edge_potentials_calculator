@@ -1,0 +1,6 @@
+__pychache__/
+*txt
+*png
+*.pyc
+*.xlsx
+.DS_store
