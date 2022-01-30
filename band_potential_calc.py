@@ -12,7 +12,6 @@ df = pd.read_csv('table_energies_of_elements.csv', sep=',', index_col='Element')
 def get_formula():
     semiconductor = input("Please, enter a semiconductor formula: ")
     formula_as_dict = chemparse.parse_formula(semiconductor)
-    # print(formula_as_dict)
     return semiconductor, formula_as_dict
 
 
@@ -45,6 +44,14 @@ semicond_electronegativity = get_electronegativity()
 e_cb, e_vb = get_band_potentials()
 
 print(f"{semiconductor} has band gap {band_gap} ev, Ecb is {round(e_cb, 2)} eV, and Evb is {round(e_vb, 2)} eV")
+
+# Make DataFrame for output information of the processed semiconductors
+df_out = pd.DataFrame()
+df_out['Semiconductor'] = semiconductor
+df_out['Band gap, eV'] = band_gap
+df_out['Ecb, eV'] = e_cb
+df_out['Evb, eV'] = e_vb
+print(df_out)
 
 # print(df, df.info())
 # df.to_csv('table_energies_of_elements.csv')
