@@ -29,7 +29,7 @@ e_vb =band_gap + e_cb
 print(f"{semiconductor} has band gap {band_gap} ev, Ecb is {round(e_cb, 2)} eV, and Evb is {round(e_vb, 2)} eV")
 # df.to_csv('table_energies_of_elements.csv')
 
-# To chekc semiconductors from list, for QA tests
+# To check semiconductors from list, for QA tests
 # semicond_list = ['BaTaO2N', 'BaTa0.5Al0.5O2N', 'BaTa0.5Mg0.5O2N', 'BaTa0.5Al0.375Mg0.125O2N']
 # for i in semicond_list:
 #     formula_as_dict = chemparse.parse_formula(i)
@@ -41,3 +41,29 @@ print(f"{semiconductor} has band gap {band_gap} ev, Ecb is {round(e_cb, 2)} eV, 
 #         ind_sum += ind
 #     semicond_electronegativity = geom_mean ** (1 / ind_sum)
 #     print(semicond_electronegativity)
+
+
+# def get_formula():
+#     semiconductor = input("Please, enter a semiconductor formula: ")
+#     formula_as_dict = chemparse.parse_formula(semiconductor)
+#     # print(formula_as_dict)
+#     return formula_as_dict
+#
+# def get_eg():
+#     """Get band gap value of the semiconductor form user"""
+#     band_gap = float(input("Please, enter the band gap value of the semiconductor: "))
+#     return band_gap
+#
+# def get_electronegativity():
+#     """Calculate semiconductor electronegativity"""
+#     geom_mean = 1
+#     ind_sum = 0
+#     for el, ind in formula_as_dict.items():
+#         geom_mean *= df['Electronegativity'][el.title()] ** ind
+#         ind_sum += ind
+#     semicond_electronegativity = geom_mean ** (1 / ind_sum)
+#     return semicond_electronegativity
+#
+# get_formula()
+# get_eg()
+# get_electronegativity()
