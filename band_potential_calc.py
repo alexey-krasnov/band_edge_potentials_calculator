@@ -46,20 +46,18 @@ e_cb, e_vb = get_band_potentials()
 print(f"{semiconductor} has band gap {band_gap} ev, Ecb is {round(e_cb, 2)} eV, and Evb is {round(e_vb, 2)} eV")
 
 # Make DataFrame for output information of the processed semiconductors
-df_out = pd.DataFrame()
-df_out['Semiconductor'] = semiconductor
-df_out['Band gap, eV'] = band_gap
-df_out['Ecb, eV'] = e_cb
-df_out['Evb, eV'] = e_vb
+col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
+df_out = pd.DataFrame(columns=col_names)
+df_out.loc[semiconductor] = [band_gap, e_cb, e_vb]
 print(df_out)
-
-# print(df, df.info())
-# df.to_csv('table_energies_of_elements.csv')
+df_out.to_csv('out_data.csv')
 
 # To check semiconductors from list, for QA tests
-# semicond_list = ['BaTaO2N', 'BaTa0.5Al0.5O2N', 'BaTa0.5Mg0.5O2N', 'BaTa0.5Al0.375Mg0.125O2N']
-# for i in semicond_list:
-#     formula_as_dict = chemparse.parse_formula(i)
+# semiconds = {'BaTaO2N' : 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N' : 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
+# col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
+# df_out = pd.DataFrame(columns=col_names)
+# for semicond, band in semiconds.items():
+#     formula_as_dict = chemparse.parse_formula(semicond)
 #     print(formula_as_dict)
 #     geom_mean = 1
 #     ind_sum = 0
@@ -67,4 +65,8 @@ print(df_out)
 #         geom_mean *= df['Electronegativity'][el.title()] ** ind
 #         ind_sum += ind
 #     semicond_electronegativity = geom_mean ** (1 / ind_sum)
-#     print(semicond_electronegativity)
+#     e_cb = semicond_electronegativity - 4.5 - 0.5 * band
+#     e_vb = band + e_cb
+#     df_out.loc[semicond] = [band, e_cb, e_vb]
+# print(df_out)
+# df_out.to_csv('out_data.csv')
