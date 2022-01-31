@@ -39,6 +39,7 @@ def get_electronegativity():
 
 
 def get_band_potentials(eg):
+    """Calculate band edge potentials in normalized hydrogen scale, eV"""
     e_cb = semicond_electronegativity - 4.5 - 0.5 * eg
     e_vb = eg + e_cb
     return e_cb, e_vb
@@ -65,8 +66,6 @@ else:
     df_out.loc[semiconductor] = [band_gap, e_cb, e_vb]
 print(df_out)
 df_out.to_csv('out_data.csv')
-
-
 
 
 # print(f"{semiconductor} has band gap {band_gap} ev, Ecb is {round(e_cb, 2)} eV, and Evb is {round(e_vb, 2)} eV")
