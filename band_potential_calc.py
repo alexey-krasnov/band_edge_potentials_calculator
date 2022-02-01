@@ -15,9 +15,9 @@ def get_formula():
     return semiconductor
 
 
-def parse_chem_formula(semiconductor):
+def parse_chem_formula(composition):
     """Parse semiconductor formula and return as dictionary {'element': index, etc}"""
-    formula_as_dict = chemparse.parse_formula(semiconductor)
+    formula_as_dict = chemparse.parse_formula(composition)
     return formula_as_dict
 
 
@@ -27,15 +27,14 @@ def get_eg():
     return band_gap
 
 
-def get_electronegativity():
+def calc_electronegativity():
     """Calculate semiconductor electronegativity"""
     geom_mean = 1
     ind_sum = 0
     for el, ind in formula_as_dict.items():
         geom_mean *= df['Electronegativity'][el.title()] ** ind
         ind_sum += ind
-    semicond_electronegativity = geom_mean ** (1 / ind_sum)
-    return semicond_electronegativity
+    return geom_mean ** (1 / ind_sum)
 
 
 def get_band_potentials(eg):
@@ -54,14 +53,14 @@ df_out = pd.DataFrame(columns=col_names)
 if semicond_dict:
     for semicond, band in semicond_dict.items():
         formula_as_dict = parse_chem_formula(semicond)
-        semicond_electronegativity = get_electronegativity()
+        semicond_electronegativity = calc_electronegativity()
         e_cb, e_vb = get_band_potentials(band)
         df_out.loc[semicond] = [band, e_cb, e_vb]
 else:
     semiconductor = get_formula()
     formula_as_dict = parse_chem_formula(semiconductor)
     band_gap = get_eg()
-    semicond_electronegativity = get_electronegativity()
+    semicond_electronegativity = calc_electronegativity()
     e_cb, e_vb = get_band_potentials(band_gap)
     df_out.loc[semiconductor] = [band_gap, e_cb, e_vb]
 print(df_out)
