@@ -44,31 +44,37 @@ def calc_electronegativity():
     return geom_mean ** (1 / ind_sum)
 
 
-def get_band_potentials(eg):
+def calc_band_potentials(eg):
     """Calculate band edge potentials in normalized hydrogen scale, eV"""
     e_cb = round(semicond_electronegativity - 4.5 - 0.5 * eg, 2)
     e_vb = round(eg + e_cb, 2)
     return e_cb, e_vb
 
 
-# semicond_dict = {'BaTaO2N': 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N': 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
-semicond_dict = {}
-# Make DataFrame for output information of the processed semiconductors
-col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
-df_out = pd.DataFrame(columns=col_names)
+def save_database():
+    """"Save processed data as database in the csv file.
+    Make DataFrame for output information of the processed semiconductors"""
+    col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
+    df_out = pd.DataFrame(columns=col_names)
+    return df_out
 
+
+semicond_dict = {'BaTaO2N': 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N': 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
+# semicond_dict = {}
+
+df_out = save_database()
 if semicond_dict:
     for semicond, band in semicond_dict.items():
         formula_as_dict = parse_chem_formula(semicond)
         semicond_electronegativity = calc_electronegativity()
-        e_cb, e_vb = get_band_potentials(band)
+        e_cb, e_vb = calc_band_potentials(band)
         df_out.loc[semicond] = [band, e_cb, e_vb]
 else:
     semiconductor = get_formula()
     formula_as_dict = parse_chem_formula(semiconductor)
     band_gap = get_eg()
     semicond_electronegativity = calc_electronegativity()
-    e_cb, e_vb = get_band_potentials(band_gap)
+    e_cb, e_vb = calc_band_potentials(band_gap)
     df_out.loc[semiconductor] = [band_gap, e_cb, e_vb]
 print(df_out)
 df_out.to_csv('out_data.csv')
