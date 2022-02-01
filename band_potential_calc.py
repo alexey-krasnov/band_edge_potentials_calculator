@@ -4,10 +4,19 @@ import chemparse
 
 
 # Read data from the csv file in the current directory
-df = pd.read_csv('table_energies_of_elements.csv', sep=',', index_col='Element')
+"""Database based on the article: R.G. Pearson, Absolute electronegativity and hardness: application to inorganic 
+chemistry,Inorg. Chem. 27 (1988) 734–740. https://doi.org/10.1021/ic00277a030."""
+df = pd.read_csv('pearson1988.csv', sep=',', index_col='Element')
+
+"""Database based on the two alternative sources"
+https://chem.libretexts.org/Ancillary_Materials/Reference/Reference_Tables/Atomic_and_Molecular_Properties/A7%3A_Electron_Affinities
+https://environmentalchemistry.com/yogi/periodic/1stionization.html"""
+# df = pd.read_csv('table_energies_of_elements.csv', sep=',', index_col='Element')
+
 # We have already calculated electronegativity of elements and save it to csv file.
-# If you wish to change data, uncomment line below and calculate again.
+# If you wish to change data, uncomment line below, calculate again and save as csv file.
 # df['Electronegativity'] = (df['Electron affinity (eV)'] + df['1st Ionization Potential (eV)']) / 2
+# df.to_csv('pearson1988.csv', sep=',', index_label='Element')
 
 def get_formula():
     """Get formula of semiconductor from user input"""
@@ -39,8 +48,8 @@ def calc_electronegativity():
 
 def get_band_potentials(eg):
     """Calculate band edge potentials in normalized hydrogen scale, eV"""
-    e_cb = semicond_electronegativity - 4.5 - 0.5 * eg
-    e_vb = eg + e_cb
+    e_cb = round(semicond_electronegativity - 4.5 - 0.5 * eg, 2)
+    e_vb = round(eg + e_cb, 2)
     return e_cb, e_vb
 
 
