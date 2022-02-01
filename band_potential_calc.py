@@ -20,8 +20,7 @@ https://environmentalchemistry.com/yogi/periodic/1stionization.html"""
 
 def get_formula():
     """Get formula of semiconductor from user input"""
-    semiconductor = input("Please, enter a semiconductor formula: ")
-    return semiconductor
+    return input("Please, enter a semiconductor formula: ")
 
 
 def parse_chem_formula(composition):
@@ -32,8 +31,7 @@ def parse_chem_formula(composition):
 
 def get_eg():
     """Get band gap value of the semiconductor form user"""
-    band_gap = float(input("Please, enter the band gap value of the semiconductor: "))
-    return band_gap
+    return float(input("Please, enter the band gap value of the semiconductor: "))
 
 
 def calc_electronegativity():
@@ -53,8 +51,8 @@ def get_band_potentials(eg):
     return e_cb, e_vb
 
 
-semicond_dict = {'BaTaO2N': 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N': 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
-
+# semicond_dict = {'BaTaO2N': 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N': 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
+semicond_dict = {}
 # Make DataFrame for output information of the processed semiconductors
 col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
 df_out = pd.DataFrame(columns=col_names)
