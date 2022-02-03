@@ -24,9 +24,8 @@ def get_formula():
 
 
 def parse_chem_formula(composition):
-    """Parse semiconductor formula and return as dictionary {'element': index, etc}"""
-    formula_as_dict = chemparse.parse_formula(composition)
-    return formula_as_dict
+    """Parse semiconductor formula and return chemical composition as dictionary {'element': index, etc.}"""
+    return chemparse.parse_formula(composition)
 
 
 def get_eg():
@@ -52,7 +51,7 @@ def calc_band_potentials(eg):
 
 
 def save_database():
-    """"Save processed data as database in the csv file.
+    """Save processed data as database in the csv file.
     Make DataFrame for output information of the processed semiconductors"""
     col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
     df_out = pd.DataFrame(columns=col_names)
