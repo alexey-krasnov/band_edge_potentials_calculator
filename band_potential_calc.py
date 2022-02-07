@@ -13,13 +13,13 @@ https://chem.libretexts.org/Ancillary_Materials/Reference/Reference_Tables/Atomi
 https://environmentalchemistry.com/yogi/periodic/1stionization.html"""
 # df = pd.read_csv('table_energies_of_elements.csv', sep=',', index_col='Element')
 
-# We have already calculated electronegativity of elements and save it to csv file.
-# If you wish to change data, uncomment line below, calculate again and save as csv file.
+# We have already calculated electronegativity of elements and save it initial csv file.
+# If you wish to change data, uncomment line below, calculate again, and save as date csv file.
 # df['Electronegativity'] = (df['Electron affinity (eV)'] + df['1st Ionization Potential (eV)']) / 2
 # df.to_csv('pearson1988.csv', sep=',', index_label='Element')
 
 def get_formula():
-    """Get formula of semiconductor from user input"""
+    """Get formula of semiconductor from user input and return it"""
     return input("Please, enter a semiconductor formula: ")
 
 
