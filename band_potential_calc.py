@@ -22,9 +22,9 @@ def check_data_type():
     """Check if data to precess is theoretical(DFT) or experimental"""
     type = input("Chose type of data needs to be processed: theoretical(DFT) or experimental.\n"
                  "Chose 't' if data is theoretical(DFT) or 'e' if data is experimental ")
-    if type == 't' or 'T':
+    if type.lower() == 't':
         return 'Theoretical(DFT)'
-    elif type == 'e' or 'E':
+    elif type.lower() == 'e':
         return "Experimental"
     else:
         print("Warning! The input data should be only letters 't' or 'e'.")
@@ -51,14 +51,36 @@ def calc_electronegativity(formula):
     return geom_mean ** (1 / ind_sum)
 
 
-def get_eg():
-    """Get band gap value of the semiconductor form user"""
-    return float(input("Please, enter the band gap value of the semiconductor: "))
+def get_direct_indirect():
+    """Ask user about semiconductor type: direct or indirect"""
+    type = input("Chose the semiconductor type: direct or indirect.\n"
+                 "Chose 'd' if the semiconductor is direct or 'i' if the semiconductor is indirect.")
+    if type.lower() == 'd':
+        return 'direct'
+    elif type.lower() == 'i':
+        return "indirect"
+    else:
+        print("Warning! The input data should be only letters 'd' or 'i'.")
 
 
-def calc_band_potentials(formula):
+def get_eg(type='direct'):
+    """Get band gap value of the semiconductor from user"""
+    # types = []
+    # user_type = get_direct_indirect()
+    # if user_type == 'indirect':
+    #     e_g_indir = input(f"Please, enter the indirect band gap value of the semiconductor: ")
+    #     e_g_dir = input("Please, enter the direct band gap value of the semiconductor: ")
+    #     return float(e_g_dir), float(e_g_indir)
+    # elif user_type == 'direct':
+    #     e_g_dir = input("Please, enter the direct band gap value of the semiconductor: ")
+    #     return float(e_g_dir)
+    e_g = input(f"Please, enter the {type} band gap value of the semiconductor: ")
+    return float(e_g)
+
+
+def calc_band_potentials(formula, type='direct'):
     """Calculate band edge potentials in normalized hydrogen scale, eV"""
-    e_g = get_eg()
+    e_g = get_eg(type)
     electronegativity = calc_electronegativity(formula)
     e_cb = round(electronegativity - 4.5 - 0.5 * e_g, 2)
     e_vb = round(e_g + e_cb, 2)
@@ -80,6 +102,11 @@ def save_database(df, semiconductor, data_type, e_g, e_cb, e_vb):
 if __name__ == "__main__":
     data_type = check_data_type()
     semiconductor = get_formula()
+    type_semiconductor = get_direct_indirect()
+    # For indirect band gap type we should calculate data for indirect and direct Eg
+    if type_semiconductor == 'indirect':
+        e_g, e_cb, e_vb = calc_band_potentials(semiconductor, type_semiconductor)
+    # For direct band gap
     e_g, e_cb, e_vb = calc_band_potentials(semiconductor)
     df_out = make_df()
     save_database(df_out, semiconductor, data_type, e_g, e_cb, e_vb)
