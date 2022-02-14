@@ -3,4 +3,4 @@ __pychache__/
 *png
 *.pyc
 *.xlsx
-.DS_store
+.*
