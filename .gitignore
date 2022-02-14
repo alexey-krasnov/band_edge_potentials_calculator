@@ -1,0 +1,7 @@
+__pychache__/
+*txt
+*png
+*.pyc
+*.xlsx
+.*
+!/.gitignore
