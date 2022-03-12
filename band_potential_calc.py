@@ -21,11 +21,19 @@ https://environmentalchemistry.com/yogi/periodic/1stionization.html"""
 
 def check_data_type():
     """Check if data to precess is theoretical(DFT) or experimental"""
+<<<<<<< HEAD
     user_data_type = input("Chose type of data needs to be processed: theoretical(DFT) or experimental.\n"
                             "Chose 't' if data is theoretical(DFT) or 'e' if data is experimental ")
     if user_data_type == 't' or 'T':
         return 'Theoretical(DFT)'
     elif user_data_type == 'e' or 'E':
+=======
+    type = input("Chose type of data needs to be processed: theoretical(DFT) or experimental.\n"
+                 "Chose 't' if data is theoretical(DFT) or 'e' if data is experimental ")
+    if type.lower() == 't':
+        return 'Theoretical(DFT)'
+    elif type.lower() == 'e':
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33
         return "Experimental"
     else:
         print("Warning! The input data should be only letters 't' or 'e'.")
@@ -52,14 +60,37 @@ def calc_electronegativity(formula: str):
     return geom_mean ** (1 / ind_sum)
 
 
+<<<<<<< HEAD
 def get_eg() -> float:
     """Get band gap value of the semiconductor form user"""
     return float(input("Please, enter the band gap value of the semiconductor: "))
+=======
+def get_direct_indirect():
+    """Ask user about semiconductor type: direct or indirect"""
+    type = input("Chose the semiconductor type: direct or indirect.\n"
+                 "Chose 'd' if the semiconductor is direct or 'i' if the semiconductor is indirect.")
+    if type.lower() == 'd':
+        return 'direct'
+    elif type.lower() == 'i':
+        return "indirect"
+    else:
+        print("Warning! The input data should be only letters 'd' or 'i'.")
 
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33
 
+def get_eg(type='direct'):
+    """Get band gap value of the semiconductor from user"""
+    e_g = input(f"Please, enter the {type} band gap value of the semiconductor: ")
+    return float(e_g)
+
+<<<<<<< HEAD
 def calc_band_potentials(formula: str) -> tuple:
+=======
+
+def calc_band_potentials(formula, type='direct'):
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33
     """Calculate band edge potentials in normalized hydrogen scale, eV"""
-    e_g = get_eg()
+    e_g = get_eg(type)
     electronegativity = calc_electronegativity(formula)
     e_cb = round(electronegativity - 4.5 - 0.5 * e_g, 2)
     e_vb = round(e_g + e_cb, 2)
@@ -67,22 +98,33 @@ def calc_band_potentials(formula: str) -> tuple:
 
 
 def make_df():
-    """Save processed data as database in the csv file.
-    Make DataFrame for output information of the processed semiconductors"""
-    col_names = ['Band gap, eV', 'Ecb, eV', 'Evb, eV']
+    """Make DataFrame for output information of the processed semiconductors"""
+    col_names = ['Direct band gap, eV',
+                 'Ecb, eV',
+                 'Evb, eV',
+                 'Indirect band gap, eV',
+                 'Ecb, eV',
+                 'Evb, eV',]
     df = pd.DataFrame(columns=col_names)
     return df
 
 
+<<<<<<< HEAD
 def save_database(df, semiconductor: str, data_type: str, e_g: float, e_cb: float, e_vb: float):
+=======
+def save_database(df, semiconductor, data_type, e_g_dir, e_cb_dir, e_vb_dir,
+                  e_g_indir=None, e_cb_indir=None, e_vb_indir=None):
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33
     """Save processed data as database in the csv file."""
-    df.loc[semiconductor] = [e_g, e_cb, e_vb]
+    df.loc[semiconductor] = [e_g_dir, e_cb_dir, e_vb_dir, e_g_indir, e_cb_indir, e_vb_indir]
     df.to_excel('out_data.xlsx', sheet_name=data_type)
 
 
 if __name__ == "__main__":
+    df_out = make_df()
     data_type = check_data_type()
     semiconductor = get_formula()
+<<<<<<< HEAD
     e_g, e_cb, e_vb = calc_band_potentials(semiconductor)
     df_out = make_df()
     save_database(df_out, semiconductor, data_type, e_g, e_cb, e_vb)
@@ -141,3 +183,13 @@ if __name__ == "__main__":
 #     df_out.loc[semicond] = [band, e_cb, e_vb]
 # print(df_out)
 # df_out.to_csv('out_data.csv')
+=======
+    type_semiconductor = get_direct_indirect()
+    # For direct band gap
+    e_g_dir, e_cb_dir, e_vb_dir = calc_band_potentials(semiconductor)
+    # For indirect band gap type we should calculate data for indirect and direct Eg
+    if type_semiconductor == 'indirect':
+        e_g_indir, e_cb_indir, e_vb_indir = calc_band_potentials(semiconductor, type_semiconductor)
+    save_database(df_out, semiconductor, data_type, e_g_dir, e_cb_dir, e_vb_dir, e_g_indir, e_cb_indir, e_vb_indir)
+
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33

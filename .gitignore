@@ -3,5 +3,10 @@ __pychache__/
 *png
 *.pyc
 *.xlsx
+<<<<<<< HEAD
 .DS_store
 !requirements.txt
+=======
+.*
+!/.gitignore
+>>>>>>> 44a3b825fa9ff0ec2c537d76dd4a07f3ef730c33
