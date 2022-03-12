@@ -18,29 +18,30 @@ https://environmentalchemistry.com/yogi/periodic/1stionization.html"""
 # df['Electronegativity'] = (df['Electron affinity (eV)'] + df['1st Ionization Potential (eV)']) / 2
 # df.to_csv('pearson1988.csv', sep=',', index_label='Element')
 
+
 def check_data_type():
     """Check if data to precess is theoretical(DFT) or experimental"""
-    type = input("Chose type of data needs to be processed: theoretical(DFT) or experimental.\n"
-                 "Chose 't' if data is theoretical(DFT) or 'e' if data is experimental ")
-    if type == 't' or 'T':
+    user_data_type = input("Chose type of data needs to be processed: theoretical(DFT) or experimental.\n"
+                            "Chose 't' if data is theoretical(DFT) or 'e' if data is experimental ")
+    if user_data_type == 't' or 'T':
         return 'Theoretical(DFT)'
-    elif type == 'e' or 'E':
+    elif user_data_type == 'e' or 'E':
         return "Experimental"
     else:
         print("Warning! The input data should be only letters 't' or 'e'.")
 
 
-def get_formula():
+def get_formula() -> str:
     """Get formula of semiconductor from user input and return it"""
     return input("Please, enter a semiconductor formula: ")
 
 
-def parse_formula(formula):
+def parse_formula(formula: str) -> dict:
     """Parse semiconductor formula and return chemical composition as dictionary {'element': index, etc.}"""
     return chemparse.parse_formula(formula)
 
 
-def calc_electronegativity(formula):
+def calc_electronegativity(formula: str):
     """Calculate semiconductor electronegativity"""
     geom_mean = 1
     ind_sum = 0
@@ -51,12 +52,12 @@ def calc_electronegativity(formula):
     return geom_mean ** (1 / ind_sum)
 
 
-def get_eg():
+def get_eg() -> float:
     """Get band gap value of the semiconductor form user"""
     return float(input("Please, enter the band gap value of the semiconductor: "))
 
 
-def calc_band_potentials(formula):
+def calc_band_potentials(formula: str) -> tuple:
     """Calculate band edge potentials in normalized hydrogen scale, eV"""
     e_g = get_eg()
     electronegativity = calc_electronegativity(formula)
@@ -72,10 +73,12 @@ def make_df():
     df = pd.DataFrame(columns=col_names)
     return df
 
-def save_database(df, semiconductor, data_type, e_g, e_cb, e_vb):
+
+def save_database(df, semiconductor: str, data_type: str, e_g: float, e_cb: float, e_vb: float):
     """Save processed data as database in the csv file."""
     df.loc[semiconductor] = [e_g, e_cb, e_vb]
     df.to_excel('out_data.xlsx', sheet_name=data_type)
+
 
 if __name__ == "__main__":
     data_type = check_data_type()
@@ -83,8 +86,6 @@ if __name__ == "__main__":
     e_g, e_cb, e_vb = calc_band_potentials(semiconductor)
     df_out = make_df()
     save_database(df_out, semiconductor, data_type, e_g, e_cb, e_vb)
-
-
 
 
 # semicond_dict = {'BaTaO2N': 1.49, 'BaTa0.5Al0.5O2N': 1.61, 'BaTa0.5Mg0.5O2N': 2.01, 'BaTa0.5Al0.375Mg0.125O2N': 1.36}
