@@ -31,10 +31,10 @@ To start the calculation run:
 ```sh
 band_potential_calc.py
 ```
-The program asks type of band gap Eg: theoretical(DFT) or experimental. 
-Next write semiconductor chemical formula and band gap value.
+The program asks about the type of band gap Eg: theoretical(DFT) or experimental. 
+Next, write the semiconductor chemical formula and band gap value.
 
-The program creates Excel file with data in 4 columns: semiconductor furmula, Band gap eV, Ecb eV, Evb eV in the sheet corresponding to theoretical(DFT) or experimental data.
+The program creates an Excel file with data in 4 columns: semiconductor formula, Band gap eV, Ecb eV, Evb eV in the sheet corresponding to theoretical(DFT) or experimental data.
 
 ## Author
 
@@ -47,4 +47,4 @@ The program creates Excel file with data in 4 columns: semiconductor furmula, Ba
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alexey-krasnov/band_edge_potentials_calculator/issues). 
+Contributions, issues, and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alexey-krasnov/band_edge_potentials_calculator/issues). 
